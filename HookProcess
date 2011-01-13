@@ -1,0 +1,17 @@
+#!/bin/sh
+if [ $# -le 1 ]; then
+cat << END
+Usage: $0 <dylib> <procname> <args>
+
+dylib is a list of dylibs to attach to your process, separated via : (e.g hook1.dylib:hook2.dylib).
+procname is the path to your application's binary.
+args are additional arguments passed to procname.
+END
+exit
+fi
+export DYLD_INSERT_LIBRARIES="$1"
+shift
+PROC="$1"
+shift
+"$PROC" $@
+ 
